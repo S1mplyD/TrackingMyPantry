@@ -2,25 +2,75 @@ package com.example.trackingmypantry
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.internal.http.HttpMethod
+import org.json.JSONObject
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val registerName: EditText = findViewById(R.id.registerName)
+        val registerMail: EditText = findViewById(R.id.registerMail)
+        val registerPassword: EditText = findViewById(R.id.registerPassword)
+        val mail = registerMail.text
+        val name = registerName.text
+        val password = registerPassword.text
         val registerButton = findViewById<Button>(R.id.registerButton)
-        registerButton.setOnClickListener { val i = Intent(this, HomePage::class.java) //register button
-        startActivity(i) //go to home page
-        finish() //kill the register activity once the user is registered
+        registerButton.setOnClickListener {
+
+            if (mail.isEmpty() || name.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d("registrato", "registrato")
+                val jsonObject = JSONObject()
+                jsonObject.put("username", name)
+                jsonObject.put("email", mail)
+                jsonObject.put("password", password)
+
+                val body = jsonObject.toString()
+                    .toRequestBody("application/json;charset=utf-8".toMediaTypeOrNull())
+                val client = OkHttpClient() //http client
+                val registerRequest = Request.Builder() //POST request (REGISTER)
+                    .url("https://lam21.modron.network/users")
+                    .post(body)
+                    .build()
+                client.newCall(registerRequest).enqueue(object : Callback {
+                    override fun onResponse(call: Call, response: Response) {
+                        val resBody = response.body?.string()
+                        println(resBody)
+                        if (response.isSuccessful) {
+                            val i = Intent(this@MainActivity, LoginPage::class.java)
+                            startActivity(i)
+                            finish()
+                        }
+                    }
+
+                    override fun onFailure(call: Call, e: IOException) {
+                        println("Failed to execute")
+                    }
+
+                })
+            }
+
         }
-        val loginLink : TextView = findViewById(R.id.clickableText)
-        loginLink.setOnClickListener { val i = Intent(this,LoginPage::class.java) //go to login page
-        startActivity(i) }
+        val loginLink: TextView = findViewById(R.id.linkToLogin)
+        loginLink.setOnClickListener {
+            val i = Intent(this, LoginPage::class.java) //go to login page
+            startActivity(i)
+        }
     }
 
 }
+
+
