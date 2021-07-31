@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -40,9 +42,12 @@ class LoginPage : AppCompatActivity() {
                 client.newCall(loginRequest).enqueue(object : Callback{
                     override fun onResponse(call: Call, response: Response) {
                         val responseBody = response.body?.string()
+                        val gson = GsonBuilder().create()
+                        val accessToken = gson.fromJson(responseBody,AccessToken::class.java)
                         println(responseBody)
                         if(response.isSuccessful){
                             val i = Intent(this@LoginPage, HomePage::class.java)
+                            i.putExtra("accessToken",accessToken.accessToken)
                             startActivity(i)
                             finishAffinity()
                         }
@@ -61,3 +66,5 @@ class LoginPage : AppCompatActivity() {
         }
     }
 }
+
+class AccessToken(val accessToken: String)
