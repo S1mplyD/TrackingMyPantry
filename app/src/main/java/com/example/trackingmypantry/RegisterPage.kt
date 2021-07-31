@@ -11,15 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.internal.http.HttpMethod
 import org.json.JSONObject
 import java.io.IOException
 
-
-class MainActivity : AppCompatActivity() {
+class RegisterPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register_page)
         val registerName: EditText = findViewById(R.id.registerName)
         val registerMail: EditText = findViewById(R.id.registerMail)
         val registerPassword: EditText = findViewById(R.id.registerPassword)
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                         val resBody = response.body?.string()
                         println(resBody)
                         if (response.isSuccessful) {
-                            val i = Intent(this@MainActivity, LoginPage::class.java)
+                            val i = Intent(this@RegisterPage, LoginPage::class.java)
                             startActivity(i)
                             finish()
                         }
@@ -64,11 +62,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        val loginLink: TextView = findViewById(R.id.linkToLogin)
-        loginLink.setOnClickListener {
-            val i = Intent(this, LoginPage::class.java) //go to login page
-            startActivity(i)
-        }
+
     }
 
 }
