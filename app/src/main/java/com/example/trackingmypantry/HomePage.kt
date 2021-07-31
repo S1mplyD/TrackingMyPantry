@@ -16,7 +16,7 @@ class HomePage : AppCompatActivity() {
         //btn.setOnClickListener { val i = Intent(this, ) }
         val getProducts: Button = findViewById(R.id.getproductsButton)
         getProducts.setOnClickListener {
-            //TODO: create another activity to insert barcode or to scan it
+            //TODO: create another activity to insert barcode or to scan it via camera
             val apiUrl = "https://lam21.modron.network/products?barcode="
             val barcode = "0000000000000"
             val accessToken = intent.getStringExtra("accessToken").toString()
