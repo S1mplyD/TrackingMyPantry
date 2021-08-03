@@ -17,6 +17,9 @@ import org.json.JSONObject
 import java.io.IOException
 
 class LoginPage : AppCompatActivity() {
+    companion object{
+        var accessToken = ""
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
@@ -43,11 +46,12 @@ class LoginPage : AppCompatActivity() {
                     override fun onResponse(call: Call, response: Response) {
                         val responseBody = response.body?.string()
                         val gson = GsonBuilder().create()
-                        val accessToken = gson.fromJson(responseBody,AccessToken::class.java)
-                        println(responseBody)
+                        val token = gson.fromJson(responseBody,AccessToken::class.java)
+                        accessToken = token.accessToken
+                        println(accessToken)
+
                         if(response.isSuccessful){
                             val i = Intent(this@LoginPage, HomePage::class.java)
-                            i.putExtra("accessToken",accessToken.accessToken)
                             startActivity(i)
                             finishAffinity()
                         }
