@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackingMyPantry">
         <activity
+            android:name=".PostProductDetails"
+            android:exported="true" />
+        <activity
             android:name=".BarcodeScanner"
             android:exported="true" />
         <activity
