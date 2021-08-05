@@ -34,14 +34,14 @@ class BarcodeScanner : AppCompatActivity() {
         codeScanner.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
         // ex. listOf(BarcodeFormat.QR_CODE)
         codeScanner.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
-        codeScanner.scanMode = ScanMode.CONTINUOUS // or CONTINUOUS or PREVIEW
+        codeScanner.scanMode = ScanMode.SINGLE// or CONTINUOUS or PREVIEW
         codeScanner.isAutoFocusEnabled = true // Whether to enable auto focus or not
         codeScanner.isFlashEnabled = false // Whether to enable flash or not
 
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             val httpCalls = HTTPcalls()
-            httpCalls.GETPRODUCTS(it.text,this)
+            httpCalls.getProducts(it.text,this)
 //            runOnUiThread {
 //                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
 //            }
