@@ -26,38 +26,10 @@ class RegisterPage : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener {
 
-            if (mail.isEmpty() || name.isEmpty() || password.isEmpty()) {
+            if (mail.isNullOrBlank() || name.isNullOrBlank() || password.isNullOrBlank()) {
                 Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("registrato", "registrato")
-                val jsonObject = JSONObject()
-                jsonObject.put("username", name)
-                jsonObject.put("email", mail)
-                jsonObject.put("password", password)
-
-                val body = jsonObject.toString()
-                    .toRequestBody("application/json;charset=utf-8".toMediaTypeOrNull())
-                val client = OkHttpClient() //http client
-                val registerRequest = Request.Builder() //POST request (REGISTER)
-                    .url("https://lam21.modron.network/users")
-                    .post(body)
-                    .build()
-                client.newCall(registerRequest).enqueue(object : Callback {
-                    override fun onResponse(call: Call, response: Response) {
-                        val resBody = response.body?.string()
-                        println(resBody)
-                        if (response.isSuccessful) {
-                            val i = Intent(this@RegisterPage, LoginPage::class.java)
-                            startActivity(i)
-                            finish()
-                        }
-                    }
-
-                    override fun onFailure(call: Call, e: IOException) {
-                        println("Failed to execute")
-                    }
-
-                })
+                HTTPcalls().register(registerName.text,registerMail.text,registerPassword.text,this,this@RegisterPage)
             }
 
         }
