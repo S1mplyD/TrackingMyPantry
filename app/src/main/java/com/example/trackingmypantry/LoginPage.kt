@@ -1,65 +1,50 @@
 package com.example.trackingmypantry
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
 class LoginPage : AppCompatActivity() {
-    companion object{
+    companion object {
         var accessToken = ""
     }
+
+    lateinit var sharedPreferences: SharedPreferences
+    var isRemembered = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_page)
+        sharedPreferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+
+        isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
+
+        if (isRemembered) {
+
+            accessToken = sharedPreferences.getString("ACCESS_TOKEN","").toString()
+            val i = Intent(this, HomePage::class.java)
+            startActivity(i)
+            finish()
+        }
+
         val loginMail: EditText = findViewById(R.id.loginMail)
         val loginPassword: EditText = findViewById(R.id.loginPassword)
-        val mail = loginMail.text
-        val password = loginPassword.text
         val loginButton = findViewById<Button>(R.id.loginButton)
+        val rememberMe: CheckBox = findViewById(R.id.rememberUser)
         loginButton.setOnClickListener {
-            if (mail.isEmpty() || password.isEmpty()) {
+            if (loginMail.text.isNullOrBlank() || loginPassword.text.isNullOrBlank()) {
                 Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
-                val jsonObject = JSONObject()
-                jsonObject.put("email", mail)
-                jsonObject.put("password", password)
-                val body = jsonObject.toString()
-                    .toRequestBody("application/json;charset=utf-8".toMediaTypeOrNull())
-                val client = OkHttpClient()
-                val loginRequest = Request.Builder()
-                        .url("https://lam21.modron.network/auth/login")
-                        .post(body)
-                        .build()
-                client.newCall(loginRequest).enqueue(object : Callback{
-                    override fun onResponse(call: Call, response: Response) {
-                        val responseBody = response.body?.string()
-                        val gson = GsonBuilder().create()
-                        val token = gson.fromJson(responseBody,AccessToken::class.java)
-                        accessToken = token.accessToken
-                        println(accessToken)
-
-                        if(response.isSuccessful){
-                            val i = Intent(this@LoginPage, HomePage::class.java)
-                            startActivity(i)
-                            finishAffinity()
-                        }
-                    }
-                    override fun onFailure(call: Call, e: IOException) {
-                        println("Failed to execute")
-                    }
-                })
+                HTTPcalls().login(
+                    loginMail.text,
+                    loginPassword.text,
+                    this,
+                    this@LoginPage,
+                    rememberMe.isChecked
+                )
             }
         }
 
