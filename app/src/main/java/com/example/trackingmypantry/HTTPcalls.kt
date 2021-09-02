@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.FragmentManager
 import com.example.trackingmypantry.LoginPage.Companion.accessToken
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -20,7 +21,7 @@ import java.io.IOException
 import java.io.Serializable
 
 class HTTPcalls {
-    fun getProducts(barcode: String, context: Context) {  //API GET PRODUCTS function
+    fun getProducts(barcode: String, context: Context, supportFragmentManager: FragmentManager) {  //API GET PRODUCTS function
         val apiUrl = "https://lam21.modron.network/products?barcode="
         val client = OkHttpClient()
         val request = Request.Builder()
@@ -53,11 +54,8 @@ class HTTPcalls {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        val i = Intent(context, PostProductDetails::class.java)
-                        i.putExtra("token", products.token)
-                        i.putExtra("barcode", barcode)
-                        val bundle = ActivityOptions.makeBasic().toBundle()
-                        startActivity(context, i, bundle)
+                        val dialog = PostProductDetails(products.token,barcode)
+                        dialog.show(supportFragmentManager,"PostProductDetails")
                     }
                 }
             }
@@ -69,7 +67,7 @@ class HTTPcalls {
         name: Editable,
         description: Editable,
         barcode: String,
-        context: Context
+        context: Context?
     ) {
         val apiUrl = "https://lam21.modron.network/products"
         val client = OkHttpClient()
@@ -171,7 +169,7 @@ class HTTPcalls {
         checked: Boolean
     ) {
         var sharedPreferences: SharedPreferences =
-            context.getSharedPreferences("SHARED_PREF",Context.MODE_PRIVATE)
+            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         val jsonObject = JSONObject()
         jsonObject.put("email", mail)
@@ -190,9 +188,9 @@ class HTTPcalls {
                 val token = gson.fromJson(responseBody, AccessToken::class.java)
                 if (response.isSuccessful) {
                     accessToken = token.accessToken
-                    if(checked){
-                        val editor : SharedPreferences.Editor = sharedPreferences.edit()
-                        editor.putBoolean("CHECKBOX",true)
+                    if (checked) {
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.putBoolean("CHECKBOX", true)
                         editor.putString("ACCESS_TOKEN", accessToken)
                         editor.apply()
                     }

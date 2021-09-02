@@ -41,7 +41,7 @@ class BarcodeScanner : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             val httpCalls = HTTPcalls()
-            httpCalls.getProducts(it.text,this)
+            httpCalls.getProducts(it.text,this,supportFragmentManager)
 //            runOnUiThread {
 //                Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
 //            }

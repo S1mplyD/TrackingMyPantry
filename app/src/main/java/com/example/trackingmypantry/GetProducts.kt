@@ -26,7 +26,7 @@ class GetProducts : AppCompatActivity() {
             } else {
                 //println(accessToken)
                 val httpCalls = HTTPcalls()
-                httpCalls.getProducts(barcode.toString(),this@GetProducts)
+                httpCalls.getProducts(barcode.toString(),this@GetProducts,supportFragmentManager)
             }
         }
 
