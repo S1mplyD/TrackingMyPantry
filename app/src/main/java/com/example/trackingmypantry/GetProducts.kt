@@ -21,10 +21,9 @@ class GetProducts : AppCompatActivity() {
             startActivity(i)
         }
         submitBarcode.setOnClickListener {
-            if (barcode.isEmpty()) {
+            if (barcode.isNullOrBlank()) {
                 Toast.makeText(this, "Empty barcode field", Toast.LENGTH_SHORT).show()
             } else {
-                //println(accessToken)
                 val httpCalls = HTTPcalls()
                 httpCalls.getProducts(barcode.toString(),this@GetProducts,supportFragmentManager)
             }
