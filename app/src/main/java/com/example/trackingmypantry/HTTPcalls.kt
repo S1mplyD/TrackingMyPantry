@@ -21,7 +21,14 @@ import java.io.IOException
 import java.io.Serializable
 
 class HTTPcalls {
-    fun getProducts(barcode: String, context: Context, supportFragmentManager: FragmentManager) {  //API GET PRODUCTS function
+
+
+    fun getProducts(
+        barcode: String,
+        context: Context,
+        supportFragmentManager: FragmentManager
+    ) {  //API GET PRODUCTS function
+
         val apiUrl = "https://lam21.modron.network/products?barcode="
         val client = OkHttpClient()
         val request = Request.Builder()
@@ -39,24 +46,41 @@ class HTTPcalls {
                 val gson = GsonBuilder().create()
                 val products = gson.fromJson(responseBody, Products::class.java)
                 if (response.isSuccessful) {
-                    if (products.products.size > 0) {
-                        val i = Intent(context, ProductResult::class.java)
-                        i.putExtra("products", products.products)
-                        i.putExtra("token", products.token)
-                        val bundle = ActivityOptions.makeBasic().toBundle()
-                        startActivity(context, i, bundle)
+                    if (response.code == 401) {
+                        var sharedPreferences: SharedPreferences =
+                            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.putBoolean("CHECKBOX", false)
+                        editor.apply()
+                        Toast.makeText(
+                            context,
+                            "Access token expired, please log in again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val i = Intent(context, LoginPage::class.java)
+                        val options = ActivityOptions.makeBasic().toBundle()
+                        startActivity(context, i, options)
                     } else {
-                        val looper = Looper.prepare()
-                        looper.run {
-                            Toast.makeText(
-                                context,
-                                "No products found",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        if (products.products.size > 0) {
+                            val i = Intent(context, ProductResult::class.java)
+                            i.putExtra("products", products.products)
+                            i.putExtra("token", products.token)
+                            val bundle = ActivityOptions.makeBasic().toBundle()
+                            startActivity(context, i, bundle)
+                        } else {
+                            val looper = Looper.prepare()
+                            looper.run {
+                                Toast.makeText(
+                                    context,
+                                    "No products found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            val dialog = PostProductDetails(products.token, barcode)
+                            dialog.show(supportFragmentManager, "PostProductDetails")
                         }
-                        val dialog = PostProductDetails(products.token,barcode)
-                        dialog.show(supportFragmentManager,"PostProductDetails")
                     }
+
                 }
             }
         })
@@ -99,6 +123,7 @@ class HTTPcalls {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
             }
 
         })
