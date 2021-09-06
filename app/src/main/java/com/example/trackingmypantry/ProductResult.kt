@@ -19,7 +19,7 @@ class ProductResult : AppCompatActivity() {
         val recView: RecyclerView = findViewById(R.id.productRecyclerView)
         recView.layoutManager = LinearLayoutManager(this)
         recView.adapter =
-            ProductAdapter(products as ArrayList<ProductData>, token, supportFragmentManager)
+            ProductAdapter(products as ArrayList<ProductData>, token, supportFragmentManager,)
 
 
     }

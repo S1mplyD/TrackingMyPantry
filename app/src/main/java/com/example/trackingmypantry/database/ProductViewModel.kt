@@ -1,6 +1,7 @@
 package com.example.trackingmypantry.database
 
 import android.app.Application
+import android.app.DownloadManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -21,6 +22,15 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch(Dispatchers.IO) {
             repository.insert(product)
         }
+    }
 
+    fun delete(product: Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.delete(product)
+        }
+    }
+
+    fun searchDatabase(searchQuery: String): LiveData<List<Product>>{
+        return repository.searchDatabase(searchQuery)
     }
 }

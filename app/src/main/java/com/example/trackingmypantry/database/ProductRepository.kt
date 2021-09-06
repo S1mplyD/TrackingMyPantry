@@ -11,4 +11,12 @@ class ProductRepository(private val productDao : ProductDao) {
     suspend fun insert(product : Product) {
         productDao.insert(product)
     }
+
+    fun delete(product: Product){
+        productDao.delete(product)
+    }
+
+    fun searchDatabase(searchQuery: String) : LiveData<List<Product>>{
+        return productDao.searchDatabase(searchQuery)
+    }
 }
