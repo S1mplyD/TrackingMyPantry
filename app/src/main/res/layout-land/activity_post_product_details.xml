@@ -10,13 +10,13 @@
         android:id="@+id/nameDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin = "50dp"
+        android:layout_margin="50dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/product_name"
         android:inputType="textCapSentences"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,47 +25,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="textCapSentences"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameDetails" />
+        app:layout_constraintStart_toEndOf="@+id/nameDetails"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/setBuyDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="?attr/colorButtonNormal"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
         android:text="@string/data_acquisto"
-        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/nameDetails" />
 
     <Button
         android:id="@+id/setExpirationDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionDetails"
-        app:layout_constraintStart_toEndOf="@+id/setBuyDate"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="35dp"
+        android:layout_marginTop="48dp"
         android:layout_marginRight="35dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/data_scadenza"
         android:backgroundTint="?attr/colorButtonNormal"
-        />
+        android:text="@string/data_scadenza"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toEndOf="@+id/setBuyDate"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionDetails" />
 
     <TextView
         android:id="@+id/buyDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/setBuyDate"
         tools:text="@tools:sample/date/ddmmyy" />
@@ -74,9 +74,9 @@
         android:id="@+id/expirationDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintHorizontal_bias="0.579"
         app:layout_constraintStart_toEndOf="@id/buyDate"
         app:layout_constraintTop_toBottomOf="@id/setExpirationDate"
         tools:text="@tools:sample/date/ddmmyy" />
@@ -85,12 +85,11 @@
         android:id="@+id/submitDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:backgroundTint="?attr/colorButtonNormal"
         android:text="@string/submit"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/expirationDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="639dp" />
+        app:layout_constraintTop_toBottomOf="@+id/expirationDate" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
