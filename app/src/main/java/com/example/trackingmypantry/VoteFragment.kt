@@ -23,7 +23,7 @@ class VoteFragment(private val name: String, private val description: String, pr
 
         rootView.findViewById<Button>(R.id.submitVoteButton).setOnClickListener {
             if(!rootView.findViewById<EditText>(R.id.vote).text.isNullOrBlank()){
-                HTTPcalls().postProductPreference(token,rootView.findViewById<EditText>(R.id.vote).text.toString().toInt(),id,context)
+                HTTPcalls().postProductPreference(token,rootView.findViewById<EditText>(R.id.vote).text.toString().toInt(),id,rootView.context)
             } else {
                 Toast.makeText(context,"Empty vote field", Toast.LENGTH_SHORT).show()
             }
