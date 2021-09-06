@@ -38,6 +38,13 @@ class HTTPcalls {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("Error", "failed to execute")
+                Looper.prepare().run {
+                    Toast.makeText(
+                        context,
+                        "Please check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -47,7 +54,7 @@ class HTTPcalls {
                 val products = gson.fromJson(responseBody, Products::class.java)
                 if (response.isSuccessful) {
                     if (response.code == 401) {
-                        var sharedPreferences: SharedPreferences =
+                        val sharedPreferences: SharedPreferences =
                             context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
                         val editor: SharedPreferences.Editor = sharedPreferences.edit()
                         editor.putBoolean("CHECKBOX", false)
@@ -87,11 +94,11 @@ class HTTPcalls {
     }
 
     fun postProductsDetails(
-        token: String,
-        name: Editable,
-        description: Editable,
+        token: String?,
+        name: String,
+        description: String,
         barcode: String,
-        context: Context?
+        context: Context
     ) {
         val apiUrl = "https://lam21.modron.network/products"
         val client = OkHttpClient()
@@ -110,19 +117,45 @@ class HTTPcalls {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("Error", "Failed to execute")
+                Looper.prepare().run {
+                    Toast.makeText(
+                        context,
+                        "Please check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string()
                 println(responseBody)
-                if (response.isSuccessful)
-                    Looper.prepare().run {
+                if (response.isSuccessful) {
+                    if (response.code == 401) {
+                        val sharedPreferences: SharedPreferences =
+                            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.putBoolean("CHECKBOX", false)
+                        editor.apply()
                         Toast.makeText(
                             context,
-                            "Product added correctly",
+                            "Access token expired, please log in again",
                             Toast.LENGTH_SHORT
                         ).show()
+                        val i = Intent(context, LoginPage::class.java)
+                        val options = ActivityOptions.makeBasic().toBundle()
+                        startActivity(context, i, options)
+                    } else {
+                        Looper.prepare().run {
+                            Toast.makeText(
+                                context,
+                                "Product added correctly",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
+
+                }
+
 
             }
 
@@ -130,7 +163,7 @@ class HTTPcalls {
 
     }
 
-    fun postProductPreference(token: String?, rating: Int, productId: String?, context: Context?) {
+    fun postProductPreference(token: String?, rating: Int, productId: String?, context: Context) {
         if (productId.isNullOrBlank()) {
             Log.d("Error", "Invalid product ID")
         } else {
@@ -148,12 +181,35 @@ class HTTPcalls {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d("Error", "Failed to execute")
+                    Looper.prepare().run {
+                        Toast.makeText(
+                            context,
+                            "Please check your internet connection",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     val responseBody = response.body?.string()
                     println(responseBody)
-                    if (response.isSuccessful)
+                    if (response.isSuccessful) {
+                        if (response.code == 401) {
+                            val sharedPreferences: SharedPreferences =
+                                context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                            editor.putBoolean("CHECKBOX", false)
+                            editor.apply()
+                            Toast.makeText(
+                                context,
+                                "Access token expired, please log in again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val i = Intent(context, LoginPage::class.java)
+                            val options = ActivityOptions.makeBasic().toBundle()
+                            startActivity(context, i, options)
+                        }
+                    } else {
                         Looper.prepare().run {
                             Toast.makeText(
                                 context,
@@ -161,6 +217,9 @@ class HTTPcalls {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                    }
+
+
                 }
 
             })
@@ -193,7 +252,7 @@ class HTTPcalls {
         loginPage: LoginPage,
         checked: Boolean
     ) {
-        var sharedPreferences: SharedPreferences =
+        val sharedPreferences: SharedPreferences =
             context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
 
         val jsonObject = JSONObject()
@@ -229,7 +288,13 @@ class HTTPcalls {
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                println("Failed to execute")
+                Looper.prepare().run {
+                    Toast.makeText(
+                        context,
+                        "Please check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
     }
@@ -267,7 +332,13 @@ class HTTPcalls {
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                println("Failed to execute")
+                Looper.prepare().run {
+                    Toast.makeText(
+                        context,
+                        "Please check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
         })
@@ -276,5 +347,6 @@ class HTTPcalls {
 }
 
 class Products(val products: ArrayList<ProductData>, val token: String)
-class ProductData(val name: String, val description: String, val id: String) : Serializable
+class ProductData(val name: String, val description: String, val id: String, val barcode: String) :
+    Serializable
 
