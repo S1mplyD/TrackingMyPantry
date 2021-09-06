@@ -8,9 +8,7 @@
     android:elevation="50dp"
     android:layout_margin="5dp"
     android:background="@drawable/shape"
-
     >
-
 
     <TextView
         android:id="@+id/productName"
@@ -38,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productName" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/expandable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,11 +59,28 @@
             android:id="@+id/voteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="76dp"
             android:backgroundTint="?attr/colorButtonNormal"
             android:text="vote"
             android:textColor="@color/white"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/addToLocalList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorButtonNormal"
+            android:text="add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/voteButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
