@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tracking My Pantry</string>
+    <string name="register">Registrati</string>
+    <string name="submit">Invia</string>
+    <string name="search">Cerca</string>
+    <string name="buy_date">Data di acquisto:</string>
+    <string name="expiration_date">Data di scadenza:</string>
+    <string name="remember_me">Ricordami</string>
+    <string name="scan_barcode">Scannerizza barcode</string>
+    <string name="search_barcode">Cerca barcode</string>
+    <string name="or">Oppure</string>
+    <string name="get_products">Ottieni prodotti</string>
+    <string name="show_local_products">Mostra prodotti locali</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="new_user">Nuovo utente?</string>
+    <string name="product_name">Nome prodotto</string>
+    <string name="description">Descrizione</string>
+    <string name="data_acquisto">data acquisto</string>
+    <string name="data_scadenza">data scadenza</string>
+    <string name="name">Nome</string>
+    <string name="password">Password</string>
+    <string name="vote">Vota</string>
+    <string name="submit_vote">Inserisci voto</string>
+    <string name="add">aggiungi</string>
+    <string name="delete">cancella</string>
+</resources>

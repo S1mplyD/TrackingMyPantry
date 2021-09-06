@@ -1,11 +1,30 @@
 <resources>
     <string name="app_name">Tracking My Pantry</string>
     <string name="register">Register</string>
-    <string name="productNameVote">ProductNameVote</string>
-    <string name="productDescriptionVote">ProductDescriptionVote</string>
+    <string name="productNameVote" translatable="false">ProductNameVote</string>
+    <string name="productDescriptionVote" translatable="false">ProductDescriptionVote</string>
     <string name="submit">Submit</string>
     <string name="search">search</string>
     <string name="buy_date">Buy date:</string>
     <string name="expiration_date">Expiration date:</string>
     <string name="remember_me">Remember me</string>
+    <string name="barcode" translatable="false">Barcode</string>
+    <string name="scan_barcode">Scan barcode</string>
+    <string name="search_barcode">Search barcode</string>
+    <string name="or">Or</string>
+    <string name="get_products">Get Products</string>
+    <string name="show_local_products">Show local products</string>
+    <string name="new_user">New user?</string>
+    <string name="product_name">Product name</string>
+    <string name="description">Description</string>
+    <string name="data_acquisto">buy date</string>
+    <string name="data_scadenza">expiration date</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="vote">Vote</string>
+    <string name="submit_vote">Submit Vote</string>
+    <string name="add">add</string>
+    <string name="delete">delete</string>
 </resources>
