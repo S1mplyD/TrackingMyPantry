@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>@string/breads</item>
+        <item>@string/cereals</item>
+        <item>@string/rice</item>
+        <item>@string/pasta</item>
+        <item>@string/vegetables</item>
+        <item>@string/legumes</item>
+        <item>@string/fruit</item>
+        <item>@string/milk</item>
+        <item>@string/yoghurt</item>
+        <item>@string/cheese</item>
+        <item>@string/meat</item>
+        <item>@string/fish</item>
+        <item>@string/eggs</item>
+        <item>@string/trail_mix</item>
+    </string-array>
+</resources>
