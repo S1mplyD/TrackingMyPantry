@@ -27,4 +27,22 @@
     <string name="submit_vote">Submit Vote</string>
     <string name="add">add</string>
     <string name="delete">delete</string>
+    <string name="cereals">Cereals</string>
+    <string name="breads">Breads</string>
+    <string name="rice">Rice</string>
+    <string name="pasta">Pasta</string>
+    <string name="vegetables">Vegetables</string>
+    <string name="legumes">Legumes</string>
+    <string name="fruit">Fruit</string>
+    <string name="milk">Milk</string>
+    <string name="yoghurt">Yoghurt</string>
+    <string name="cheese">Cheese</string>
+    <string name="meat">Meat</string>
+    <string name="fish">Fish</string>
+    <string name="eggs">Eggs</string>
+    <string name="trail_mix">Trail mix</string>
+    <string name="category">Category: </string>
+    <string name="filter">Filter</string>
+
+
 </resources>

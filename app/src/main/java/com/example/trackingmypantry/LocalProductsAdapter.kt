@@ -45,6 +45,8 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
             holder.productBuyDate.visibility = View.GONE
             holder.productExpirationDate.visibility = View.GONE
         }
+        if(!productList[position].categoria.isNullOrBlank()) holder.category.text = currentItem.categoria
+        else holder.category.visibility = View.GONE
 
         holder.itemView.setOnClickListener {
             if (holder.itemView.findViewById<ConstraintLayout>(R.id.expandableLocal).isVisible) {
@@ -76,5 +78,5 @@ class CustomViewHolderLocal(view: View) : RecyclerView.ViewHolder(view) {
     val productDescription: TextView = view.findViewById(R.id.productDescription)
     val productBuyDate: TextView = view.findViewById(R.id.buyDateCard)
     val productExpirationDate: TextView = view.findViewById(R.id.expirationDateCard)
-
+    val category : TextView = view.findViewById(R.id.productCategory)
 }
