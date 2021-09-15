@@ -3,6 +3,7 @@ package com.example.trackingmypantry
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,15 +42,23 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.filter_menu) {
+            val dialog = FilterFragment()
+            dialog.show(supportFragmentManager, "filter_fragment")
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if(query != null){
+        if (query != null) {
             searchDatabase(query)
         }
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if(query != null){
+        if (query != null) {
             searchDatabase(query)
         }
         return true
