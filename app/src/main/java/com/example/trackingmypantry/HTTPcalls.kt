@@ -29,7 +29,7 @@ class HTTPcalls {
         supportFragmentManager: FragmentManager
     ) {  //API GET PRODUCTS function
 
-        val apiUrl = "https://lam21.modron.network/products?barcode="
+        val apiUrl = "https://lam21.iot-prism-lab.cs.unibo.it/products?barcode="
         val client = OkHttpClient()
         val request = Request.Builder()
             .addHeader("Authorization", "Bearer $accessToken")
@@ -100,7 +100,7 @@ class HTTPcalls {
         barcode: String,
         context: Context
     ) {
-        val apiUrl = "https://lam21.modron.network/products"
+        val apiUrl = "https://lam21.iot-prism-lab.cs.unibo.it/products"
         val client = OkHttpClient()
         val jsonObject = JSONObject()
         jsonObject.put("token", token)
@@ -167,7 +167,7 @@ class HTTPcalls {
         if (productId.isNullOrBlank()) {
             Log.d("Error", "Invalid product ID")
         } else {
-            val apiUrl = "https://lam21.modron.network/votes"
+            val apiUrl = "https://lam21.iot-prism-lab.cs.unibo.it/votes"
             val client = OkHttpClient()
             val jsonObject = JSONObject()
             jsonObject.put("token", token)
@@ -262,7 +262,7 @@ class HTTPcalls {
             .toRequestBody("application/json;charset=utf-8".toMediaTypeOrNull())
         val client = OkHttpClient()
         val loginRequest = Request.Builder()
-            .url("https://lam21.modron.network/auth/login")
+            .url("https://lam21.iot-prism-lab.cs.unibo.it/auth/login")
             .post(body)
             .build()
         client.newCall(loginRequest).enqueue(object : Callback {
@@ -316,7 +316,7 @@ class HTTPcalls {
             .toRequestBody("application/json;charset=utf-8".toMediaTypeOrNull())
         val client = OkHttpClient() //http client
         val registerRequest = Request.Builder() //POST request (REGISTER)
-            .url("https://lam21.modron.network/users")
+            .url("https://lam21.iot-prism-lab.cs.unibo.it/users")
             .post(body)
             .build()
         client.newCall(registerRequest).enqueue(object : Callback {

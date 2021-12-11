@@ -38,5 +38,6 @@
     <string name="trail_mix">Frutta secca</string>
     <string name="breads">Pane</string>
     <string name="category">Categoria: </string>
-    <string name="filter">Filter</string>
+    <string name="filter">Filtro</string>
+    <string name="other">Altro</string>
 </resources>

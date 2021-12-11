@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,9 @@ class AddProductToLocalDB(
 
         val submitButton: Button = rootView.findViewById(R.id.submitDetails)
 
+        val category : Spinner = rootView.findViewById(R.id.categoriesSelector)
+        //TODO: ArrayAdapter
+
         rootView.findViewById<Button>(R.id.setBuyDate).setOnClickListener {
             getToday()
             DatePickerDialog(
@@ -101,13 +105,14 @@ class AddProductToLocalDB(
                 cal.clear()
                 cal.set(endYear, endMonth, endDay, 0, 0, 0)
                 val dataDiScadenza = cal.time
+                println("cat " + category.onItemSelectedListener)
                 val product = Product(
                     nameDetails.text.toString(),
                     descriptionDetails.text.toString(),
                     barcode,
                     dataDiScadenza,
                     dataDiAcquisto,
-                    null,
+                    ,
                     null
                 )
                 mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)

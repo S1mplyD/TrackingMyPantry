@@ -15,5 +15,6 @@
         <item>@string/fish</item>
         <item>@string/eggs</item>
         <item>@string/trail_mix</item>
+        <item>@string/other</item>
     </string-array>
 </resources>

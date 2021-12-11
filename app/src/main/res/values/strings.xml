@@ -43,6 +43,7 @@
     <string name="trail_mix">Trail mix</string>
     <string name="category">Category: </string>
     <string name="filter">Filter</string>
+    <string name="other">Other</string>
 
 
 </resources>

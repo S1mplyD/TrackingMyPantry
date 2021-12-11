@@ -45,7 +45,7 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
             holder.productBuyDate.visibility = View.GONE
             holder.productExpirationDate.visibility = View.GONE
         }
-        if(!productList[position].categoria.isNullOrBlank()) holder.category.text = currentItem.categoria
+        if(!currentItem.categoria.isNullOrBlank()) holder.category.text = currentItem.categoria
         else holder.category.visibility = View.GONE
 
         holder.itemView.setOnClickListener {
