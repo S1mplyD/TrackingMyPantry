@@ -55,9 +55,17 @@ class AddProductToLocalDB(
         descriptionDetails.setText(descrizione)
 
         val submitButton: Button = rootView.findViewById(R.id.submitDetails)
-
+        var itemCategory = ""
         val category : Spinner = rootView.findViewById(R.id.categoriesSelector)
-        //TODO: ArrayAdapter
+        category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                itemCategory = adapterView?.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         rootView.findViewById<Button>(R.id.setBuyDate).setOnClickListener {
             getToday()
@@ -112,7 +120,7 @@ class AddProductToLocalDB(
                     barcode,
                     dataDiScadenza,
                     dataDiAcquisto,
-                    ,
+                    itemCategory,
                     null
                 )
                 mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)

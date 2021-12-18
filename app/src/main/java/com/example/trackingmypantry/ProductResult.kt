@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.example.trackingmypantry.database.ProductDatabase
 
 class ProductResult : AppCompatActivity() {
 
@@ -20,8 +18,6 @@ class ProductResult : AppCompatActivity() {
         recView.layoutManager = LinearLayoutManager(this)
         recView.adapter =
             ProductAdapter(products as ArrayList<ProductData>, token, supportFragmentManager,)
-
-
     }
 
 }

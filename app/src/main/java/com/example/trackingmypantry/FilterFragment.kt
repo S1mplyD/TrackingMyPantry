@@ -18,6 +18,7 @@ class FilterFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         var rootView : View = inflater.inflate(R.layout.activity_filter_fragment, container, false)
+        //TODO: filter by category -> list with checkbox
 
         return rootView
     }
