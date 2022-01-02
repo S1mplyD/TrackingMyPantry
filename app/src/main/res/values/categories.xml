@@ -16,5 +16,6 @@
         <item>@string/eggs</item>
         <item>@string/trail_mix</item>
         <item>@string/other</item>
+        <item>@string/noCategory</item>
     </string-array>
 </resources>

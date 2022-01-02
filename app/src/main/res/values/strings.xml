@@ -44,6 +44,6 @@
     <string name="category">Category: </string>
     <string name="filter">Filter</string>
     <string name="other">Other</string>
-
+    <string name="noCategory" >No category</string>
 
 </resources>
