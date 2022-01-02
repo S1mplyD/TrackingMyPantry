@@ -1,9 +1,13 @@
 package com.example.trackingmypantry
 
+import android.content.DialogInterface
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +19,7 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var mviewmodel: ProductViewModel
     private lateinit var adapter: LocalProductsAdapter
+    private var result: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +49,20 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.filter_menu) {
-            val dialog = FilterFragment()
-            dialog.show(supportFragmentManager, "filter_fragment")
+            val builder = AlertDialog.Builder(this)
+            val res: Resources = resources
+            val array = res.getStringArray(R.array.categories)
+            //result = -1
+            builder.setSingleChoiceItems(array, -1) { dialogInterface, i ->
+                dialogInterface.dismiss()
+                result = array[i]
+                searchByCategory(result)
+            }
+            val dialog = builder.create()
+            dialog.show()
+
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -73,4 +89,22 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         })
     }
 
+    private fun searchByCategory(category: String) {
+        val res: Resources = resources
+        val noCat : String = res.getString(R.string.noCategory)
+        if(category != noCat){
+            val searchQuery = "%$category%"
+            mviewmodel.searchByCategory(searchQuery).observe(this, { list ->
+                list.let {
+                    adapter.setData(it)
+                }
+            })
+        }
+        else{
+            println("here")
+            mviewmodel.allProducts.observe(this, Observer { product ->
+                adapter.setData(product)
+            })
+        }
+    }
 }
