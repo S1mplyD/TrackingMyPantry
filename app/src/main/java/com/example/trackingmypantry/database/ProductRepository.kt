@@ -19,4 +19,8 @@ class ProductRepository(private val productDao : ProductDao) {
     fun searchDatabase(searchQuery: String) : LiveData<List<Product>>{
         return productDao.searchDatabase(searchQuery)
     }
+
+    fun searchByCategory(category: String) : LiveData<List<Product>>{
+        return productDao.searchByCategory(category)
+    }
 }

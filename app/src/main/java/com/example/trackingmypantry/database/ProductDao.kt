@@ -12,6 +12,9 @@ interface ProductDao {
     @Query("SELECT * FROM products_table WHERE nome LIKE :searchQuery OR barcode LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): LiveData<List<Product>>
 
+    @Query("SELECT * FROM products_table WHERE categoria LIKE :category")
+    fun searchByCategory(category: String): LiveData<List<Product>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg product: Product)
 

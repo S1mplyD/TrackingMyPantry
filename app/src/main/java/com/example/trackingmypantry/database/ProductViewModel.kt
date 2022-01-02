@@ -33,4 +33,8 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     fun searchDatabase(searchQuery: String): LiveData<List<Product>>{
         return repository.searchDatabase(searchQuery)
     }
+
+    fun searchByCategory(category: String): LiveData<List<Product>>{
+        return repository.searchByCategory(category)
+    }
 }
