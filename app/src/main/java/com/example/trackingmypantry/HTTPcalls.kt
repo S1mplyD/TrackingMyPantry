@@ -52,41 +52,42 @@ class HTTPcalls {
                 println(responseBody)
                 val gson = GsonBuilder().create()
                 val products = gson.fromJson(responseBody, Products::class.java)
-                if (response.isSuccessful) {
-                    if (response.code == 401) {
-                        val sharedPreferences: SharedPreferences =
-                            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                        editor.putBoolean("CHECKBOX", false)
-                        editor.apply()
+                if (response.code == 401) {
+                    val sharedPreferences: SharedPreferences =
+                        context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putBoolean("CHECKBOX", false)
+                    editor.apply()
+                    Looper.prepare().run {
                         Toast.makeText(
                             context,
                             "Access token expired, please log in again",
                             Toast.LENGTH_SHORT
                         ).show()
-                        val i = Intent(context, LoginPage::class.java)
-                        val options = ActivityOptions.makeBasic().toBundle()
-                        startActivity(context, i, options)
-                    } else {
-                        if (products.products.size > 0) {
-                            val i = Intent(context, ProductResult::class.java)
-                            i.putExtra("products", products.products)
-                            i.putExtra("token", products.token)
-                            val bundle = ActivityOptions.makeBasic().toBundle()
-                            startActivity(context, i, bundle)
-                        } else {
-                            val looper = Looper.prepare()
-                            looper.run {
-                                Toast.makeText(
-                                    context,
-                                    "No products found",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            val dialog = PostProductDetails(products.token, barcode)
-                            dialog.show(supportFragmentManager, "PostProductDetails")
-                        }
                     }
+                    val i = Intent(context, LoginPage::class.java)
+                    val options = ActivityOptions.makeBasic().toBundle()
+                    startActivity(context, i, options)
+                } else if (response.isSuccessful) {
+                    if (products.products.size > 0) {
+                        val i = Intent(context, ProductResult::class.java)
+                        i.putExtra("products", products.products)
+                        i.putExtra("token", products.token)
+                        val bundle = ActivityOptions.makeBasic().toBundle()
+                        startActivity(context, i, bundle)
+                    } else {
+                        val looper = Looper.prepare()
+                        looper.run {
+                            Toast.makeText(
+                                context,
+                                "No products found",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        val dialog = PostProductDetails(products.token, barcode)
+                        dialog.show(supportFragmentManager, "PostProductDetails")
+                    }
+
 
                 }
             }
@@ -129,38 +130,33 @@ class HTTPcalls {
             override fun onResponse(call: Call, response: Response) {
                 val responseBody = response.body?.string()
                 println(responseBody)
-                if (response.isSuccessful) {
-                    if (response.code == 401) {
-                        val sharedPreferences: SharedPreferences =
-                            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                        editor.putBoolean("CHECKBOX", false)
-                        editor.apply()
+                if (response.code == 401) {
+                    val sharedPreferences: SharedPreferences =
+                        context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putBoolean("CHECKBOX", false)
+                    editor.apply()
+                    Looper.prepare().run {
                         Toast.makeText(
                             context,
                             "Access token expired, please log in again",
                             Toast.LENGTH_SHORT
                         ).show()
-                        val i = Intent(context, LoginPage::class.java)
-                        val options = ActivityOptions.makeBasic().toBundle()
-                        startActivity(context, i, options)
-                    } else {
-                        Looper.prepare().run {
-                            Toast.makeText(
-                                context,
-                                "Product added correctly",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
                     }
-
+                    val i = Intent(context, LoginPage::class.java)
+                    val options = ActivityOptions.makeBasic().toBundle()
+                    startActivity(context, i, options)
+                } else if (response.isSuccessful) {
+                    Looper.prepare().run {
+                        Toast.makeText(
+                            context,
+                            "Product added correctly",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-
-
             }
-
         })
-
     }
 
     fun postProductPreference(token: String?, rating: Int, productId: String?, context: Context) {
@@ -193,23 +189,24 @@ class HTTPcalls {
                 override fun onResponse(call: Call, response: Response) {
                     val responseBody = response.body?.string()
                     println(responseBody)
-                    if (response.isSuccessful) {
-                        if (response.code == 401) {
-                            val sharedPreferences: SharedPreferences =
-                                context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                            editor.putBoolean("CHECKBOX", false)
-                            editor.apply()
-                            Toast.makeText(
-                                context,
-                                "Access token expired, please log in again",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val i = Intent(context, LoginPage::class.java)
-                            val options = ActivityOptions.makeBasic().toBundle()
-                            startActivity(context, i, options)
-                        }
-                    } else {
+                    if (response.code == 401) {
+                        val sharedPreferences: SharedPreferences =
+                            context.getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.putBoolean("CHECKBOX", false)
+                        editor.apply()
+                        Toast.makeText(
+                            context,
+                            "Access token expired, please log in again",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val i = Intent(context, LoginPage::class.java)
+                        val options = ActivityOptions.makeBasic().toBundle()
+                        startActivity(context, i, options)
+                    }
+
+
+                    else if (response.isSuccessful) {
                         Looper.prepare().run {
                             Toast.makeText(
                                 context,
