@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.trackingmypantry">
     <!-- Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,14 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackingMyPantry">
         <activity
-            android:name=".FilterFragment"
-            android:exported="true" />
-        <activity
             android:name=".LocalProducts"
             android:exported="true" />
         <activity
             android:name=".PostProductDetails"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".BarcodeScanner"
             android:exported="true" />
