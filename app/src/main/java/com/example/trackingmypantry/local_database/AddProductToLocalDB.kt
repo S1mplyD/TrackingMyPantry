@@ -1,12 +1,9 @@
-package com.example.trackingmypantry
+package com.example.trackingmypantry.local_database
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +11,9 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.trackingmypantry.database.Product
-import com.example.trackingmypantry.database.ProductViewModel
-import org.w3c.dom.Text
+import com.example.trackingmypantry.R
+import com.example.trackingmypantry.room_database.Product
+import com.example.trackingmypantry.room_database.ProductViewModel
 import java.util.*
 
 class AddProductToLocalDB(
@@ -102,7 +99,7 @@ class AddProductToLocalDB(
         }
 
         submitButton.setOnClickListener {
-            if (nameDetails.text.isNullOrBlank() || descriptionDetails.text.isNullOrBlank()) {
+            if (nameDetails.text.isNullOrBlank() || descriptionDetails.text.isNullOrBlank() || itemCategory.isNullOrBlank()) {
                 Toast.makeText(context, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
 
