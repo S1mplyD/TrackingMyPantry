@@ -1,13 +1,10 @@
-package com.example.trackingmypantry.database
+package com.example.trackingmypantry.room_database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.trackingmypantry.ProductData
-import kotlinx.coroutines.CoroutineScope
-import java.time.chrono.HijrahChronology.INSTANCE
 
 @Database(entities = [Product::class], version = 1, exportSchema = false)
 @TypeConverters(TypeConverter::class)

@@ -1,7 +1,6 @@
-package com.example.trackingmypantry.database
+package com.example.trackingmypantry.room_database
 
 import android.app.Application
-import android.app.DownloadManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope

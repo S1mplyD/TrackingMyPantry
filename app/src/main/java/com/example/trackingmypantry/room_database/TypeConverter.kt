@@ -1,4 +1,4 @@
-package com.example.trackingmypantry.database
+package com.example.trackingmypantry.room_database
 
 import androidx.room.TypeConverter
 import java.util.*

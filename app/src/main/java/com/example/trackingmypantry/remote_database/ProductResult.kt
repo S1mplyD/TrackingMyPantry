@@ -1,9 +1,11 @@
-package com.example.trackingmypantry
+package com.example.trackingmypantry.remote_database
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.trackingmypantry.ProductData
+import com.example.trackingmypantry.R
 
 class ProductResult : AppCompatActivity() {
 

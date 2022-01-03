@@ -1,4 +1,4 @@
-package com.example.trackingmypantry.database
+package com.example.trackingmypantry.room_database
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData

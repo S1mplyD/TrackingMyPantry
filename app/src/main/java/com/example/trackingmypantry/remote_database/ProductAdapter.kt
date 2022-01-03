@@ -1,17 +1,18 @@
-package com.example.trackingmypantry
+package com.example.trackingmypantry.remote_database
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trackingmypantry.database.Product
-import com.example.trackingmypantry.database.ProductViewModel
+import com.example.trackingmypantry.ProductData
+import com.example.trackingmypantry.R
+import com.example.trackingmypantry.VoteFragment
+import com.example.trackingmypantry.local_database.AddProductToLocalDB
 
 class ProductAdapter(
     private val products: ArrayList<ProductData>,

@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/productDescription"
@@ -62,6 +62,7 @@
             android:text="@string/buy_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="5dp"
             tools:text="@tools:sample/date/ddmmyy" />
 
         <TextView
@@ -73,7 +74,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buyDateCard"
             tools:text="@tools:sample/date/ddmmyy"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"/>
         <TextView
             android:id="@+id/productCategory"
             android:layout_width="wrap_content"
@@ -81,7 +83,8 @@
             android:text="@string/category"
             app:layout_constraintTop_toBottomOf="@+id/expirationDateCard"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"/>
 
         <Button
             android:id="@+id/deleteButton"

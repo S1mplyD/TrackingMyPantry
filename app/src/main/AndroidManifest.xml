@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackingMyPantry">
         <activity
-            android:name=".LocalProducts"
+            android:name=".local_database.LocalProducts"
             android:exported="true" />
         <activity
             android:name=".PostProductDetails"
@@ -24,7 +24,7 @@
             android:name=".BarcodeScanner"
             android:exported="true" />
         <activity
-            android:name=".ProductResult"
+            android:name=".remote_database.ProductResult"
             android:exported="true" />
         <activity
             android:name=".GetProducts"

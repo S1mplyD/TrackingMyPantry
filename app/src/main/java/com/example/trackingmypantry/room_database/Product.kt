@@ -1,4 +1,4 @@
-package com.example.trackingmypantry.database
+package com.example.trackingmypantry.room_database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,6 +11,6 @@ data class Product(
     @PrimaryKey val barcode: String,
     val dataDiScadenza: Date?,
     val dataDiAcquisto: Date?,
-    val categoria: String?,
+    val categoria: String,
     val numeroProdotti: Int?
 )

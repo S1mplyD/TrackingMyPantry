@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import com.example.trackingmypantry.LoginPage.Companion.accessToken
+import com.example.trackingmypantry.remote_database.ProductResult
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
