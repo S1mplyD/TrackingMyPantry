@@ -1,4 +1,4 @@
-package com.example.trackingmypantry
+package com.example.trackingmypantry.local_database
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trackingmypantry.database.Product
-import com.example.trackingmypantry.database.ProductViewModel
+import com.example.trackingmypantry.R
+import com.example.trackingmypantry.room_database.Product
+import com.example.trackingmypantry.room_database.ProductViewModel
+import okhttp3.internal.indexOf
 
 class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
     RecyclerView.Adapter<CustomViewHolderLocal>() {
@@ -38,15 +40,16 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
                     .substring(0, 10) + " " + currentItem.dataDiAcquisto.toString()
                     .substring(24, 28)
             holder.productExpirationDate.text =
-                "${holder.itemView.findViewById<TextView>(R.id.expirationDateCard).resources.getString(R.string.expiration_date)} " + currentItem.dataDiScadenza.toString()
+                "${holder.itemView.findViewById<TextView>(R.id.expirationDateCard).resources.getString(
+                    R.string.expiration_date
+                )} " + currentItem.dataDiScadenza.toString()
                     .substring(0, 10) + " " + currentItem.dataDiScadenza.toString()
                     .substring(24, 28)
         } else {
             holder.productBuyDate.visibility = View.GONE
             holder.productExpirationDate.visibility = View.GONE
         }
-        if(!currentItem.categoria.isNullOrBlank()) holder.category.text = currentItem.categoria
-        else holder.category.visibility = View.GONE
+        holder.category.text = holder.itemView.resources.getString(R.string.category) + " " + currentItem.categoria
 
         holder.itemView.setOnClickListener {
             if (holder.itemView.findViewById<ConstraintLayout>(R.id.expandableLocal).isVisible) {
@@ -69,8 +72,6 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
         this.productList = product
         notifyDataSetChanged()
     }
-
-
 }
 
 class CustomViewHolderLocal(view: View) : RecyclerView.ViewHolder(view) {
