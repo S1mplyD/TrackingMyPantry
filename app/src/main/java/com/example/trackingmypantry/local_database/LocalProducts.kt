@@ -1,19 +1,18 @@
-package com.example.trackingmypantry
+package com.example.trackingmypantry.local_database
 
-import android.content.DialogInterface
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trackingmypantry.database.ProductViewModel
+import com.example.trackingmypantry.R
+import com.example.trackingmypantry.room_database.ProductViewModel
 
 class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -90,21 +89,13 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun searchByCategory(category: String) {
-        val res: Resources = resources
-        val noCat : String = res.getString(R.string.noCategory)
-        if(category != noCat){
-            val searchQuery = "%$category%"
-            mviewmodel.searchByCategory(searchQuery).observe(this, { list ->
-                list.let {
-                    adapter.setData(it)
-                }
-            })
-        }
-        else{
-            println("here")
-            mviewmodel.allProducts.observe(this, Observer { product ->
-                adapter.setData(product)
-            })
-        }
+        val searchQuery = "%$category%"
+        mviewmodel.searchByCategory(searchQuery).observe(this, { list ->
+            list.let {
+                adapter.setData(it)
+            }
+        })
     }
+
 }
+
