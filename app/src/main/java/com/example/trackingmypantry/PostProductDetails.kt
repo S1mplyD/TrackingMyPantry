@@ -47,9 +47,7 @@ class PostProductDetails(private val token: String?, private val barcode: String
         val descriptionDetails: EditText = rootView.findViewById(R.id.descriptionDetails)
         val nameField = nameDetails.text
         val descriptionField = descriptionDetails.text
-
         val submitButton: Button = rootView.findViewById(R.id.submitDetails)
-
         val category : Spinner = rootView.findViewById(R.id.categoriesSelector)
         category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -124,14 +122,12 @@ class PostProductDetails(private val token: String?, private val barcode: String
         return rootView
     }
 
-
     private fun getToday() {
         val cal: Calendar = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
     }
-
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {}
 
 }
