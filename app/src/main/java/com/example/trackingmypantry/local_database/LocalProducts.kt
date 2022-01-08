@@ -23,21 +23,25 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_local_products)
-
+        //Inizializzo il viewModel del database locale
         mviewmodel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        //Creo la Recycler View
         val recview: RecyclerView = findViewById(R.id.localProductsRecView)
+        //Inizializzo l'adapter della recycler View
         adapter = LocalProductsAdapter(mviewmodel)
         recview.layoutManager = LinearLayoutManager(this)
         recview.adapter = adapter
 
+        //Leggo i prodotti salvati localmente e li visualizzo nella recycler view
         mviewmodel.allProducts.observe(this, Observer { product ->
             adapter.setData(product)
         })
     }
 
+    //Funzione che crea il menù opzioni
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-
+        //Menù che permette di cercare un prodotto
         val search = menu?.findItem(R.id.search_menu)
         val searchView = search?.actionView as? SearchView
         searchView?.isSubmitButtonEnabled = true
@@ -46,12 +50,14 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
+    //Funzione che permette di visualizzare i prodotti in una determinata categoria
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.filter_menu) {
+            //Creo un Alert Dialog per mostrare le categorie
             val builder = AlertDialog.Builder(this)
             val res: Resources = resources
             val array = res.getStringArray(R.array.categories)
-            //result = -1
+            //mostro i prodotti appartenenti alla categoria selezionata
             builder.setSingleChoiceItems(array, -1) { dialogInterface, i ->
                 dialogInterface.dismiss()
                 result = array[i]
@@ -65,6 +71,7 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         return super.onOptionsItemSelected(item)
     }
 
+    //Cerca i prodotti attinenti al completamento della stringa
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
             searchDatabase(query)
@@ -72,6 +79,7 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
+    //Cerca i prodotti attinenti nel momento della scrittura della stringa
     override fun onQueryTextChange(query: String?): Boolean {
         if (query != null) {
             searchDatabase(query)
@@ -79,6 +87,7 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
+    //Cerca la query inserita nel database locale
     private fun searchDatabase(query: String) {
         val searchQuery = "%$query%"
         mviewmodel.searchDatabase(searchQuery).observe(this, { list ->
@@ -88,6 +97,7 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
         })
     }
 
+    //Cerca la categoria inserita nel database locale
     private fun searchByCategory(category: String) {
         val searchQuery = "%$category%"
         mviewmodel.searchByCategory(searchQuery).observe(this, { list ->

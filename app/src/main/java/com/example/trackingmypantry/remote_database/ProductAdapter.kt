@@ -19,64 +19,59 @@ class ProductAdapter(
     private val token: String?,
     private val supportFragmentManager: FragmentManager
 ) : RecyclerView.Adapter<CustomViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.product_card, parent, false)
-
         return CustomViewHolder(cellForRow)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        //Pongo i campi della view ai valori dei prodotti
         holder.productName.text = products[position].name
         holder.productDescription.text = products[position].description
+        //Se clicco su un prodotto estendo la sua scheda mostrando due bottoni
         holder.itemView.setOnClickListener {
             if (holder.itemView.findViewById<ConstraintLayout>(R.id.expandable).isVisible) {
-                //TransitionManager.beginDelayedTransition(holder.itemView as ViewGroup)
-                holder.itemView.findViewById<ConstraintLayout>(R.id.expandable).visibility = View.GONE
+                holder.itemView.findViewById<ConstraintLayout>(R.id.expandable).visibility =
+                    View.GONE
             } else {
-               // TransitionManager.beginDelayedTransition(holder.itemView as ViewGroup)
                 holder.itemView.findViewById<ConstraintLayout>(R.id.expandable).visibility =
                     View.VISIBLE
             }
-
         }
 
-        //val delete : Button = holder.itemView.findViewById(R.id.delete)
-
-//        delete.setOnClickListener {
-//            HTTPcalls().delete(products[position].id)
-//            products.removeAt(position)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position,products.size)
-//
-//        }
-        val addToDatabase : Button = holder.itemView.findViewById(R.id.addToLocalList)
+        val addToDatabase: Button = holder.itemView.findViewById(R.id.addToLocalList)
+        //Bottone che serve ad aprire un dialog per aggiungere un prodotto al database locale
         addToDatabase.setOnClickListener {
-            val dialog = AddProductToLocalDB(products[position].barcode,products[position].name,products[position].description)
+            val dialog = AddProductToLocalDB(
+                products[position].barcode,
+                products[position].name,
+                products[position].description
+            )
             dialog.show(supportFragmentManager, "PostProductDetails")
         }
-        val vote : Button = holder.itemView.findViewById(R.id.voteButton)
+        val vote: Button = holder.itemView.findViewById(R.id.voteButton)
+        //Bottone che serve per dare un voto ad un prodotto
         vote.setOnClickListener {
-            val dialog = VoteFragment(products[position].name,products[position].description,token,products[position].id)
-
+            val dialog = VoteFragment(
+                products[position].name,
+                products[position].description,
+                token,
+                products[position].id
+            )
             dialog.show(supportFragmentManager, "VoteDialog")
-//            val i = Intent(holder.itemView.context,VotePage::class.java)
-//            i.putExtra("token", token)
-//            i.putExtra("productName",products[position].name)
-//            i.putExtra("productDescription", products[position].description)
-//            i.putExtra("productID", products[position].id)
-//            startActivity(holder.itemView.context,i,ActivityOptions.makeBasic().toBundle())
         }
-
     }
 
+    //Ritorna il numero di prodotti
     override fun getItemCount(): Int {
         return products.size
     }
 
-
 }
 
+//Classe contenente gli oggetti della view
 class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val productName: TextView = view.findViewById(R.id.productName)
     val productDescription: TextView = view.findViewById(R.id.productDescription)

@@ -3,6 +3,7 @@ package com.example.trackingmypantry.room_database
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 
+//Repository del database che fornisce all'applicazione un accesso ai dati
 class ProductRepository(private val productDao : ProductDao) {
     val allProducts: LiveData<List<Product>> = productDao.getAll()
 

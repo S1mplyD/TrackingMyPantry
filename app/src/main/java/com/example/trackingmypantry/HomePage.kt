@@ -19,6 +19,8 @@ class HomePage : AppCompatActivity() {
         setContentView(R.layout.activity_home_page)
         sharedPreferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE)
         val getProducts: Button = findViewById(R.id.getproductsButton)
+
+        //Funzione per andare nell'activity GetProducts
         getProducts.setOnClickListener {
             val i = Intent(this, GetProducts::class.java)
             startActivity(i)

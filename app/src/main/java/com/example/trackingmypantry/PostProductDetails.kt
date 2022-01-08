@@ -15,11 +15,12 @@ import com.example.trackingmypantry.room_database.Product
 import com.example.trackingmypantry.room_database.ProductViewModel
 import java.util.*
 
+//Classe che gestisce immettere un prodotto nel database remoto
 class PostProductDetails(private val token: String?, private val barcode: String) :
     DialogFragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var mViewModel: ProductViewModel
 
-
+    //Variabili per le date di acquisto e scadenza
     @RequiresApi(Build.VERSION_CODES.N)
     var day = 0
     var month = 0
@@ -48,17 +49,23 @@ class PostProductDetails(private val token: String?, private val barcode: String
         val nameField = nameDetails.text
         val descriptionField = descriptionDetails.text
         val submitButton: Button = rootView.findViewById(R.id.submitDetails)
-        val category : Spinner = rootView.findViewById(R.id.categoriesSelector)
+        val category: Spinner = rootView.findViewById(R.id.categoriesSelector)
+        //Funzione che permette di scegliere una categoria dall'apposito spinner
         category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 itemCategory = adapterView?.getItemAtPosition(position).toString()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                Toast.makeText(rootView.context,"Nothing selected",Toast.LENGTH_SHORT).show()
+                Toast.makeText(rootView.context, "Nothing selected", Toast.LENGTH_SHORT).show()
             }
         }
-
+        //Funzione che permette di selezionare una data di acquisto
         rootView.findViewById<Button>(R.id.setBuyDate).setOnClickListener {
             getToday()
             DatePickerDialog(
@@ -75,7 +82,7 @@ class PostProductDetails(private val token: String?, private val barcode: String
             ).show()
 
         }
-
+        //Funzione che permette di selezionare una data di scadenza
         rootView.findViewById<Button>(R.id.setExpirationDate).setOnClickListener {
             getToday()
             DatePickerDialog(
@@ -92,11 +99,13 @@ class PostProductDetails(private val token: String?, private val barcode: String
                 day
             ).show()
         }
-
+        //Funzione che inserisce il nuovo prodotto nei database
         submitButton.setOnClickListener {
+            //Controllo se i parametri "nome", "descrizione" e "categoria" sono nulli
             if (nameField.isNullOrBlank() || descriptionField.isNullOrBlank() || itemCategory.isNullOrBlank()) {
                 Toast.makeText(context, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
+                //Inserisco il prodotto nel database remoto
                 HTTPcalls().postProductsDetails(
                     token,
                     nameField.toString(),
@@ -104,14 +113,24 @@ class PostProductDetails(private val token: String?, private val barcode: String
                     barcode,
                     rootView.context
                 )
+                //Creo una data di acquisto e di scadenza
                 val cal = Calendar.getInstance()
                 cal.clear()
-                cal.set(startYear,startMonth,startDay,0,0,0)
+                cal.set(startYear, startMonth, startDay)
                 val dataDiAcquisto = cal.time
                 cal.clear()
-                cal.set(endYear,endMonth,endDay,0,0,0)
+                cal.set(endYear, endMonth, endDay)
                 val dataDiScadenza = cal.time
-                val product = Product(nameField.toString(),descriptionField.toString(),barcode,dataDiScadenza,dataDiAcquisto,itemCategory,null)
+                //Creo un nuovo prodotto con i dati inseriti dall'utente
+                val product = Product(
+                    nameField.toString(),
+                    descriptionField.toString(),
+                    barcode,
+                    dataDiScadenza,
+                    dataDiAcquisto,
+                    itemCategory
+                )
+                //Inizializzo il viewModel del database ed inserisco il nuovo prodotto
                 mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
                 mViewModel.insert(product)
                 dismiss()
@@ -121,13 +140,14 @@ class PostProductDetails(private val token: String?, private val barcode: String
 
         return rootView
     }
-
+    //Funzione che ritorna il giorno attuale
     private fun getToday() {
         val cal: Calendar = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
     }
+
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {}
 
 }

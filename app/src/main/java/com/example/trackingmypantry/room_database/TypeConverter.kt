@@ -3,6 +3,7 @@ package com.example.trackingmypantry.room_database
 import androidx.room.TypeConverter
 import java.util.*
 
+//Classe che converte il formato Date in Long
 class TypeConverter {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {

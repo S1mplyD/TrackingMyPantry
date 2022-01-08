@@ -16,6 +16,7 @@ import com.example.trackingmypantry.room_database.Product
 import com.example.trackingmypantry.room_database.ProductViewModel
 import java.util.*
 
+//Classe che gestisce immettere un prodotto nel database locale
 class AddProductToLocalDB(
     private val barcode: String,
     private val nome: String,
@@ -24,6 +25,7 @@ class AddProductToLocalDB(
     DialogFragment(), DatePickerDialog.OnDateSetListener {
     private lateinit var mViewModel: ProductViewModel
 
+    //Variabili per le date di acquisto e scadenza
     @RequiresApi(Build.VERSION_CODES.N)
     var day = 0
     var month = 0
@@ -53,9 +55,15 @@ class AddProductToLocalDB(
 
         val submitButton: Button = rootView.findViewById(R.id.submitDetails)
         var itemCategory = ""
-        val category : Spinner = rootView.findViewById(R.id.categoriesSelector)
+        val category: Spinner = rootView.findViewById(R.id.categoriesSelector)
+        //Funzione che permette di scegliere una categoria dall'apposito spinner
         category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 itemCategory = adapterView?.getItemAtPosition(position).toString()
             }
 
@@ -63,7 +71,7 @@ class AddProductToLocalDB(
                 TODO("Not yet implemented")
             }
         }
-
+        //Funzione che permette di selezionare una data di acquisto
         rootView.findViewById<Button>(R.id.setBuyDate).setOnClickListener {
             getToday()
             DatePickerDialog(
@@ -80,7 +88,7 @@ class AddProductToLocalDB(
             ).show()
 
         }
-
+        //Funzione che permette di selezionare una data di scadenza
         rootView.findViewById<Button>(R.id.setExpirationDate).setOnClickListener {
             getToday()
             DatePickerDialog(
@@ -97,29 +105,31 @@ class AddProductToLocalDB(
                 day
             ).show()
         }
-
+        //Funzione che inserisce il nuovo prodotto nel database
         submitButton.setOnClickListener {
+            //Controllo se i parametri "nome", "descrizione" e "categoria" sono nulli
             if (nameDetails.text.isNullOrBlank() || descriptionDetails.text.isNullOrBlank() || itemCategory.isNullOrBlank()) {
+                //Avviso l'utente che ci sono campi necessari vuoti
                 Toast.makeText(context, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
-
+                //Creo una data di acquisto e di scadenza
                 val cal = Calendar.getInstance()
                 cal.clear()
-                cal.set(startYear, startMonth, startDay, 0, 0, 0)
+                cal.set(startYear, startMonth, startDay)
                 val dataDiAcquisto = cal.time
                 cal.clear()
-                cal.set(endYear, endMonth, endDay, 0, 0, 0)
+                cal.set(endYear, endMonth, endDay)
                 val dataDiScadenza = cal.time
-                println("cat " + category.onItemSelectedListener)
+                //Creo un nuovo prodotto con i dati inseriti dall'utente
                 val product = Product(
                     nameDetails.text.toString(),
                     descriptionDetails.text.toString(),
                     barcode,
                     dataDiScadenza,
                     dataDiAcquisto,
-                    itemCategory,
-                    null
+                    itemCategory
                 )
+                //Inizializzo il viewModel del database ed inserisco il nuovo prodotto
                 mViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
                 mViewModel.insert(product)
                 dismiss()
@@ -130,7 +140,7 @@ class AddProductToLocalDB(
         return rootView
     }
 
-
+    //Funzione che ritorna il giorno attuale
     private fun getToday() {
         val cal: Calendar = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)

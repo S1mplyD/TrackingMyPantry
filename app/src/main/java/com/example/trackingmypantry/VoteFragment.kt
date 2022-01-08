@@ -17,18 +17,19 @@ class VoteFragment(private val name: String, private val description: String, pr
         savedInstanceState: Bundle?
     ): View? {
         var rootView : View = inflater.inflate(R.layout.fragment_vote, container, false)
-
+        //Visualizzo nome e descrizione del prodotto
         rootView.findViewById<TextView>(R.id.productNameVote).text = name
         rootView.findViewById<TextView>(R.id.productDescriptionVote).text = description
 
         rootView.findViewById<Button>(R.id.submitVoteButton).setOnClickListener {
+            //Controllo che il campo voto non sia nullo
             if(!rootView.findViewById<EditText>(R.id.vote).text.isNullOrBlank()){
+                //Inserisco il voto sul database remoto
                 HTTPcalls().postProductPreference(token,rootView.findViewById<EditText>(R.id.vote).text.toString().toInt(),id,rootView.context)
             } else {
                 Toast.makeText(context,"Empty vote field", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         return rootView
     }

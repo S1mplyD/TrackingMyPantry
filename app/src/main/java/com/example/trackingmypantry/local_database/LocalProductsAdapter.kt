@@ -37,19 +37,19 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
         if (!(currentItem.dataDiAcquisto.toString().length < 28 || currentItem.dataDiScadenza.toString().length < 28)) {
             holder.productBuyDate.text =
                 "${holder.itemView.findViewById<TextView>(R.id.buyDateCard).resources.getString(R.string.buy_date)} " + currentItem.dataDiAcquisto.toString()
-                    .substring(0, 10) + " " + currentItem.dataDiAcquisto.toString()
-                    .substring(24, 28)
+                    .replace("00:00:00 GMT+01:00", "")
             holder.productExpirationDate.text =
-                "${holder.itemView.findViewById<TextView>(R.id.expirationDateCard).resources.getString(
-                    R.string.expiration_date
-                )} " + currentItem.dataDiScadenza.toString()
-                    .substring(0, 10) + " " + currentItem.dataDiScadenza.toString()
-                    .substring(24, 28)
+                "${
+                    holder.itemView.findViewById<TextView>(R.id.expirationDateCard).resources.getString(
+                        R.string.expiration_date
+                    )
+                } " + currentItem.dataDiScadenza.toString().replace("00:00:00 GMT+01:00", "")
         } else {
             holder.productBuyDate.visibility = View.GONE
             holder.productExpirationDate.visibility = View.GONE
         }
-        holder.category.text = holder.itemView.resources.getString(R.string.category) + " " + currentItem.categoria
+        holder.category.text =
+            holder.itemView.resources.getString(R.string.category) + " " + currentItem.categoria
 
         holder.itemView.setOnClickListener {
             if (holder.itemView.findViewById<ConstraintLayout>(R.id.expandableLocal).isVisible) {
@@ -79,5 +79,5 @@ class CustomViewHolderLocal(view: View) : RecyclerView.ViewHolder(view) {
     val productDescription: TextView = view.findViewById(R.id.productDescription)
     val productBuyDate: TextView = view.findViewById(R.id.buyDateCard)
     val productExpirationDate: TextView = view.findViewById(R.id.expirationDateCard)
-    val category : TextView = view.findViewById(R.id.productCategory)
+    val category: TextView = view.findViewById(R.id.productCategory)
 }
