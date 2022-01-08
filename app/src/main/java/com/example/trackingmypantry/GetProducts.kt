@@ -16,16 +16,20 @@ class GetProducts : AppCompatActivity() {
         val barcode = barcodeText.text
         val submitBarcode: Button = findViewById(R.id.submitBarcode)
         val scanner : Button = findViewById(R.id.scanButton)
+
+        //Funzione che mi reindirizza allo scanner del barcode
         scanner.setOnClickListener {
             val i = Intent(this,BarcodeScanner::class.java)
             startActivity(i)
         }
+
+        //Funzione che cerca il barcode inserito
         submitBarcode.setOnClickListener {
+            //Se il barcode non è vuoto, eseguo la chiamata HTTP get Products
             if (barcode.isNullOrBlank()) {
                 Toast.makeText(this, "Empty barcode field", Toast.LENGTH_SHORT).show()
             } else {
-                val httpCalls = HTTPcalls()
-                httpCalls.getProducts(barcode.toString(),this@GetProducts,supportFragmentManager)
+                HTTPcalls().getProducts(barcode.toString(),this@GetProducts,supportFragmentManager)
             }
         }
 
