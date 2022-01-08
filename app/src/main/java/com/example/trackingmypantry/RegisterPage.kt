@@ -25,10 +25,11 @@ class RegisterPage : AppCompatActivity() {
         val password = registerPassword.text
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener {
-
+            //Controllo che i campi non siano vuoti
             if (mail.isNullOrBlank() || name.isNullOrBlank() || password.isNullOrBlank()) {
                 Toast.makeText(this, "Empty field", Toast.LENGTH_SHORT).show()
             } else {
+                //Chiamata HTTP a register
                 HTTPcalls().register(registerName.text,registerMail.text,registerPassword.text,this,this@RegisterPage)
             }
 
