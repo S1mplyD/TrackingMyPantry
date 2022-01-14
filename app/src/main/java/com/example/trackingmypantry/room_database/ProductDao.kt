@@ -16,7 +16,7 @@ interface ProductDao {
     fun searchDatabase(searchQuery: String): LiveData<List<Product>>
 
     //Funzione che ritorna un prodotto in base alla categoria
-    @Query("SELECT * FROM products_table WHERE categoria=:category ")
+    @Query("SELECT * FROM products_table WHERE categoria LIKE :category ")
     fun searchByCategory(category: String): LiveData<List<Product>>
 
     //Funzione che inserisce un prodotto nel database, se il prodotto esiste già lo sostituisce
