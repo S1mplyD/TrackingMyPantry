@@ -65,7 +65,11 @@ class LocalProducts : AppCompatActivity(), SearchView.OnQueryTextListener {
             }
             val dialog = builder.create()
             dialog.show()
-
+        }
+        else if (item.itemId == R.id.resetCategories){
+            mviewmodel.allProducts.observe(this, Observer { product ->
+                adapter.setData(product)
+            })
         }
 
         return super.onOptionsItemSelected(item)
