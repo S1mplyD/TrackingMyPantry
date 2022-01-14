@@ -20,6 +20,7 @@ class ProductAdapter(
     private val supportFragmentManager: FragmentManager
 ) : RecyclerView.Adapter<CustomViewHolder>() {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.product_card, parent, false)

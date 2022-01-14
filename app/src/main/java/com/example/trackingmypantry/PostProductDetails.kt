@@ -116,11 +116,15 @@ class PostProductDetails(private val token: String?, private val barcode: String
                 //Creo una data di acquisto e di scadenza
                 val cal = Calendar.getInstance()
                 cal.clear()
-                cal.set(startYear, startMonth, startDay)
-                val dataDiAcquisto = cal.time
+                cal.set(startYear, startMonth, startDay,0,0,0)
+                var dataDiAcquisto = cal.time
                 cal.clear()
-                cal.set(endYear, endMonth, endDay)
-                val dataDiScadenza = cal.time
+                cal.set(endYear, endMonth, endDay,0,0,0)
+                var dataDiScadenza = cal.time
+                if (dataDiAcquisto.toString() == "Wed Dec 31 00:00:00 GMT+01:00 2")
+                    dataDiAcquisto = null
+                if (dataDiScadenza.toString() == "Wed Dec 31 00:00:00 GMT+01:00 2")
+                    dataDiScadenza = null
                 //Creo un nuovo prodotto con i dati inseriti dall'utente
                 val product = Product(
                     nameField.toString(),

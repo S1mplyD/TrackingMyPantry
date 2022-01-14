@@ -1,17 +1,11 @@
 package com.example.trackingmypantry
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import java.io.IOException
 
 class RegisterPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +26,8 @@ class RegisterPage : AppCompatActivity() {
                 //Chiamata HTTP a register
                 HTTPcalls().register(registerName.text,registerMail.text,registerPassword.text,this,this@RegisterPage)
             }
-
         }
-
     }
-
 }
 
 
