@@ -359,6 +359,16 @@ class HTTPcalls {
                     startActivity(context, i, options)
                     finishAffinity(registerPage)
                 }
+                //L'utente esiste già
+                else if (response.code == 500){
+                    Looper.prepare().run {
+                        Toast.makeText(
+                            context,
+                            "User already existing!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
 
             override fun onFailure(call: Call, e: IOException) {
