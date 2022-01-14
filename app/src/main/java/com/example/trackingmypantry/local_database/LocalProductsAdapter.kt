@@ -19,6 +19,7 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
 
     private var productList = emptyList<Product>()
 
+    //ritorna il numero di prodotti
     override fun getItemCount(): Int {
         return productList.size
     }
@@ -31,26 +32,33 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolderLocal, position: Int) {
+        //Pongo i campi della view ai valori dei prodotti
         val currentItem = productList[position]
         holder.productName.text = currentItem.nome
         holder.productDescription.text = currentItem.descrizione
-        if (!(currentItem.dataDiAcquisto.toString().length < 28 || currentItem.dataDiScadenza.toString().length < 28)) {
+        //Controllo se sono state inserite una data di acquisto o scadenza. Se sono inserite le visualizzo, altrimenti le elimino dalla visualizzazione
+        if(currentItem.dataDiAcquisto !== null){
             holder.productBuyDate.text =
                 "${holder.itemView.findViewById<TextView>(R.id.buyDateCard).resources.getString(R.string.buy_date)} " + currentItem.dataDiAcquisto.toString()
-                    .replace("00:00:00 GMT+01:00", "")
+        }
+        else {
+            holder.productBuyDate.visibility = View.GONE
+        }
+        if (currentItem.dataDiScadenza != null) {
             holder.productExpirationDate.text =
                 "${
                     holder.itemView.findViewById<TextView>(R.id.expirationDateCard).resources.getString(
                         R.string.expiration_date
                     )
-                } " + currentItem.dataDiScadenza.toString().replace("00:00:00 GMT+01:00", "")
-        } else {
-            holder.productBuyDate.visibility = View.GONE
+                } " + currentItem.dataDiScadenza.toString()
+        }
+        else{
             holder.productExpirationDate.visibility = View.GONE
         }
+        //Categoria del prodotto
         holder.category.text =
             holder.itemView.resources.getString(R.string.category) + " " + currentItem.categoria
-
+        //Se clicco su un prodotto estendo la sua scheda mostrando il bottone per eliminare il prodotto
         holder.itemView.setOnClickListener {
             if (holder.itemView.findViewById<ConstraintLayout>(R.id.expandableLocal).isVisible) {
                 holder.itemView.findViewById<ConstraintLayout>(R.id.expandableLocal).visibility =
@@ -60,6 +68,7 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
                     View.VISIBLE
             }
         }
+        //Bottone di eliminazione prodotto, elimina il prodotto dal database e notifica la recycler view che aggiorna la visualizzazione
         holder.itemView.findViewById<Button>(R.id.deleteButton).setOnClickListener {
             mviewmodel.delete(productList[position])
             notifyItemRemoved(position)
@@ -67,6 +76,7 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
         }
     }
 
+    //Funzione che viene chiamata per settare i prodotti
     @SuppressLint("NotifyDataSetChanged")
     fun setData(product: List<Product>) {
         this.productList = product
@@ -74,6 +84,7 @@ class LocalProductsAdapter(private val mviewmodel: ProductViewModel) :
     }
 }
 
+//Viewholder
 class CustomViewHolderLocal(view: View) : RecyclerView.ViewHolder(view) {
     val productName: TextView = view.findViewById(R.id.productName)
     val productDescription: TextView = view.findViewById(R.id.productDescription)
